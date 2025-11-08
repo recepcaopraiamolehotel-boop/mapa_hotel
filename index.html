@@ -124,7 +124,7 @@
     font-size: 14px;
     color: #ffffff;
     font-weight: 500;
-    max-width: 260px;
+    max-width: 600px;
     z-index: 1000;
     border: 1px solid rgba(227, 182, 46, 0.4);
     transition: transform 0.3s ease;
@@ -145,6 +145,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  
+  .legend-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .legend-paragraph {
+    flex: 1;
+  }
+  
+  .legend-paragraph h5 {
+    color: #f7d154;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(227, 182, 46, 0.3);
+    padding-bottom: 5px;
   }
   
   .legend-item {
@@ -228,6 +249,8 @@
   .legend-icon.solar { background: linear-gradient(135deg, #1abc9c, #16a085); }
   .legend-icon.lagoa { background: linear-gradient(135deg, #34495e, #2c3e50); }
   .legend-icon.acesso { background: linear-gradient(135deg, #e67e22, #d35400); }
+  .legend-icon.campo { background: linear-gradient(135deg, #e84393, #fd79a8); }
+  .legend-icon.tenis { background: linear-gradient(135deg, #00b894, #00cec9); }
   
   /* PAINEL LATERAL - NOVA FUNCIONALIDADE */
   .info-panel {
@@ -410,7 +433,7 @@
     }
     
     .legend {
-      max-width: 220px;
+      max-width: 500px;
       font-size: 13px;
       padding: 14px 18px;
     }
@@ -538,6 +561,15 @@
       height: 60px;
       font-size: 1.5rem;
     }
+    
+    /* Em mobile, a legenda volta a uma coluna */
+    .legend-content {
+      flex-direction: column;
+    }
+    
+    .legend-paragraph {
+      margin-bottom: 15px;
+    }
   }
 
   /* Mobile muito pequeno */
@@ -579,13 +611,21 @@
         <button class="minimize-btn" id="minimize-btn" title="Minimizar legenda">−</button>
       </h4>
       <div class="legend-content">
-        <div class="legend-item" data-type="restaurante"><div class="legend-icon restaurante">R</div>Restaurante</div>
-        <div class="legend-item" data-type="piscina"><div class="legend-icon piscina">P</div>Piscina Externa</div>
-        <div class="legend-item" data-type="recepcao"><div class="legend-icon recepcao">R</div>Recepção</div>
-        <div class="legend-item" data-type="cabanas"><div class="legend-icon cabanas">C</div>Cabanas</div>
-        <div class="legend-item" data-type="solar"><div class="legend-icon solar">S</div>Solar</div>
-        <div class="legend-item" data-type="lagoa"><div class="legend-icon lagoa">L</div>Lagoa da Conceição</div>
-        <div class="legend-item" data-type="acesso"><div class="legend-icon acesso">A</div>Acesso Praia Mole</div>
+        <div class="legend-paragraph">
+          <h5>Comodidades Principais</h5>
+          <div class="legend-item" data-type="restaurante"><div class="legend-icon restaurante">R</div>Restaurante Principal</div>
+          <div class="legend-item" data-type="piscina"><div class="legend-icon piscina">P</div>Piscina Externa</div>
+          <div class="legend-item" data-type="recepcao"><div class="legend-icon recepcao">R</div>Recepção</div>
+          <div class="legend-item" data-type="cabanas"><div class="legend-icon cabanas">C</div>Cabanas</div>
+          <div class="legend-item" data-type="solar"><div class="legend-icon solar">S</div>Solar</div>
+        </div>
+        <div class="legend-paragraph">
+          <h5>Áreas e Acessos</h5>
+          <div class="legend-item" data-type="lagoa"><div class="legend-icon lagoa">L</div>Lagoa da Conceição</div>
+          <div class="legend-item" data-type="acesso"><div class="legend-icon acesso">A</div>Acesso Praia Mole</div>
+          <div class="legend-item" data-type="campo"><div class="legend-icon campo">C</div>Campo de Areia</div>
+          <div class="legend-item" data-type="tenis"><div class="legend-icon tenis">T</div>Campo de Tênis</div>
+        </div>
       </div>
     </div>
   </div>
@@ -664,7 +704,9 @@
       'cabanas': '#f39c12',
       'solar': '#1abc9c',
       'lagoa': '#34495e',
-      'acesso': '#e67e22'
+      'acesso': '#e67e22',
+      'campo': '#e84393',
+      'tenis': '#00b894'
     };
     
     var iconLetters = {
@@ -674,7 +716,9 @@
       'cabanas': 'C',
       'solar': 'S',
       'lagoa': 'L',
-      'acesso': 'A'
+      'acesso': 'A',
+      'campo': 'C',
+      'tenis': 'T'
     };
     
     return L.divIcon({
@@ -694,7 +738,9 @@
       'cabanas': '#f39c12',
       'solar': '#1abc9c',
       'lagoa': '#34495e',
-      'acesso': '#e67e22'
+      'acesso': '#e67e22',
+      'campo': '#e84393',
+      'tenis': '#00b894'
     };
     return iconColors[type] || '#34495e';
   }
@@ -707,7 +753,9 @@
       'cabanas': 'C',
       'solar': 'S',
       'lagoa': 'L',
-      'acesso': 'A'
+      'acesso': 'A',
+      'campo': 'C',
+      'tenis': 'T'
     };
     return iconLetters[type] || '?';
   }
@@ -796,7 +844,7 @@
     {
       nome: "Cabanas de Praia",
       tipo: "cabanas",
-      coordenadas: [-27.6020, -48.4371],
+      coordenadas: [-27.602103, -48.437201], // Coordenadas atualizadas
       descricao: "Cabanas exclusivas para hóspedes na beira da praia. Oferecemos um ambiente privativo e confortável com vista privilegiada para o mar. Cada cabana é equipada com espreguiçadeiras, guarda-sol e serviço de praia personalizado para uma experiência única.",
       horario: "Reserva necessária - Disponível das 8h às 18h"
     },
@@ -838,9 +886,37 @@
     {
       nome: "Acesso à Praia Mole",
       tipo: "acesso",
-      coordenadas: [-27.60222000, -48.43544000],
+      coordenadas: [-27.602246, -48.435184], // Coordenadas atualizadas
       descricao: "Principal acesso direto à famosa Praia Mole a partir do hotel. Trilha pavimentada e segura que leva diretamente às areias douradas. A praia é conhecida mundialmente por suas ondas perfeitas para surf e beleza natural preservada.",
       horario: "Acesso 24h para hóspedes - Trilha iluminada durante a noite"
+    },
+    {
+      nome: "Campo de Areia",
+      tipo: "campo",
+      coordenadas: [-27.601878, -48.438254], // Novo ponto
+      descricao: "Campo de areia para prática de vôlei de praia e futevôlei. Espaço dedicado a atividades esportivas e recreação ao ar livre. Equipado com redes e iluminação noturna para jogos durante a noite.",
+      horario: "Acesso livre - Iluminação até as 22h"
+    },
+    {
+      nome: "Campo de Tênis",
+      tipo: "tenis",
+      coordenadas: [-27.601823, -48.437776], // Novo ponto
+      descricao: "Quadra de tênis profissional para hóspedes. Superfície sintética de alta qualidade, equipada com iluminação noturna. Raquetes e bolas disponíveis para empréstimo na recepção.",
+      horario: "Das 7h às 22h - Reserva antecipada recomendada"
+    },
+    {
+      nome: "Restaurante Casa Branca",
+      tipo: "restaurante",
+      coordenadas: [-27.602179, -48.438626], // Novo ponto
+      descricao: "Ambiente sofisticado com gastronomia refinada e carta de vinhos selecionados. O restaurante oferece pratos da culinária contemporânea em um ambiente elegante com vista para os jardins do hotel.",
+      horario: "Jantar: 19h-23h | Fechado às segundas-feiras"
+    },
+    {
+      nome: "Piscina Interna",
+      tipo: "piscina",
+      coordenadas: [-27.602174, -48.436456], // Novo ponto
+      descricao: "Piscina coberta e aquecida para uso durante todo o ano. Área climatizada com jacuzzi, sauna e duchas. Perfeita para relaxamento e atividades aquáticas em qualquer estação.",
+      horario: "Das 6h às 22h - Área exclusiva para maiores de 16 anos"
     }
   ];
 
